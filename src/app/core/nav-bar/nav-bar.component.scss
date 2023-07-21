@@ -1,0 +1,18 @@
+.cart-blank{
+    position: relative;
+    margin-right: 10px;
+}
+.cart-no{
+    position: absolute;
+    top: -12px !important;
+    left: 22px !important;
+    
+    //left: 20px !important;
+    background-color: red;
+    border-radius: 50%;
+    width: 18px;
+   text-align: center;
+   color: white;
+   font-weight: 600;
+
+}
