@@ -1,18 +1,30 @@
 .cart-blank{
     position: relative;
     margin-right: 10px;
+    padding-top:15px ;
+    padding-left: 15px;
 }
 .cart-no{
     position: absolute;
-    top: -12px !important;
-    left: 22px !important;
+    // top: -1px !important;
+    // left: 40px !important;
     
-    //left: 20px !important;
-    background-color: red;
+    // //left: 20px !important;
+    // background-color: red;
+    // border-radius: 50%;
+    // width: 20px;
+    // text-align: center;
+    // color: white;
+    // font-weight: 600;
+    min-width: 25px;
+    min-width: 25px;
     border-radius: 50%;
-    width: 18px;
-   text-align: center;
-   color: white;
-   font-weight: 600;
+    font-size: 1em;
+    background-color: red;
+    text-align: center;
+    top: 0px;
+    right: -5px;
+    color: white;
+     
 
 }

@@ -1,8 +1,76 @@
-<div class="container">
-    <div class="" *ngFor="let item of Products">
-  
-        <strong>{{item.price}}</strong>
-        <strong>{{item.productName}}</strong>
+<div class="mt-2 mx-2">
+  <select name="" [(ngModel)]="brandIdSelected" id=""  >
+      <option value="0" selected>All</option>
+      <option *ngFor="let brand of ProductBrands$ | async" [value]="brand.id" >{{brand.name}}</option>
+    </select>
+</div>
 
-     </div>
+<div class="d-flex">
+    <div class=" col-3 m-3">
+
+      <h5 class="text-warning ml-3">Sort</h5>
+      <select name=""class="form-select mb-3" id="">
+         <option value="" selected>Alphabetical</option>
+         <option value="" >Price: Low to high</option>
+         <option value="" >Price: high to Low</option>
+
+      </select>
+
+      <h5 class="text-warning ml-3">Brands</h5>
+      <select name=""class="form-select mb-3" id="" [(ngModel)]="brandIdSelected" >
+        <option value="0" selected>All</option>
+         <option *ngFor="let brand of ProductBrands$ | async" [value]="brand.id" >{{brand.name}}</option>
+   
+      </select>
+    
+      <h5 class="text-warning ml-3">Types</h5>
+      <select name=""class="form-select mb-3" id="" [(ngModel)]="typeIdSelected">
+        <option value="0" selected>All</option>
+         <option *ngFor="let type of ProductTypes$| async" [value]="type.id" >{{type.name}}</option>
+
+      </select>
+
+        <h3>Filters</h3>
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action active">
+            Cras justo odio
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+          <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+          <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+          <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+        </div>
+        <h3 class="mt-2">Search</h3>
+
+        <div class="list-group ">
+          <a href="#" class="list-group-item list-group-item-action active">
+            Cras justo odio
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+          <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+          <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+          <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+        </div>
+    </div>
+    <div class="col-8">
+      
+        <div class="d-flex justify-content-between align-items-center mt-2 mb-2">
+            <header style="margin-left: 4em; " class="col-5">
+            <span>Showing <strong>10</strong> of <strong>16</strong></span>
+          </header>
+          <div class=" d-flex col-7  form-inline mt-2 ">
+            <input type="text" class="form-control" style="max-width: 300px;" placeho
+            lder="Search">
+            <button class="btn btn-outline-primary mx-2 "style="max-width: 100px;">Search </button>
+            <button class="btn btn-outline-success mx-2">Reset</button>
+          </div>
+
+        </div>
+  
+        <div class="row mx-5">
+
+            <div class="col-md-4" *ngFor="let pro of Products$ | async ">
+                 <app-product-item [_itemFromParent] ="pro"></app-product-item>
+          </div>
+    </div>
 </div>

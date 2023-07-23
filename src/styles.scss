@@ -1,4 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 100vw; //
+  overflow-x: hidden;
+}
 *{
-    text-decoration: none !important;
-  }
+  text-decoration: none !important;
+
+}
