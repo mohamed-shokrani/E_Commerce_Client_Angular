@@ -1,0 +1,7 @@
+// //   ngOnChanges(changes: SimpleChanges): void {
+// //     this.getAllpro();
+// //   }
+// Products$?: Observable<IProducts[] | undefined>;
+// ProductBrands$: Observable<IProductBrand[]>; //= [];
+// ProductTypes$: Observable<IProductBrand[]>; //= []; this.ProductBrands$ = this.shopService.getAllProductBrands();
+// this.ProductTypes$ = this.shopService.getAllProductTypes();
