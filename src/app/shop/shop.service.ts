@@ -68,7 +68,9 @@ export class ShopService {
       this.baseUrl + 'Products/ProductTypes'
     );
   }
-
+  getProductById(id: number) {
+    return this.http.get<IProducts>(this.baseUrl + 'products/' + id);
+  }
   getAllProducts(
     brandId?: number,
     typeId?: number
@@ -95,6 +97,7 @@ export class ShopService {
       pictureUrl: ele.pictureUrl,
       productBrandName: ele.productBrandName,
       productTypeName: ele.productTypeName,
+      productId: ele.productId,
     }));
   }
   getAllProductBrands<IProductBrand>() {

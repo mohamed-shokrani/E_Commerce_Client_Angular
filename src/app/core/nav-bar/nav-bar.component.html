@@ -1,31 +1,41 @@
+<div
+  class="d-flex fixed flex-column flex-md-row justify-content-between p-3 px-md-4 mb-5 bg-white border-bottom shadow-sm"
+>
+  <a [routerLink]="['/']">
+    <img
+      src="/src/assets/images/st.jpg"
+      style="
+        max-width: 70px;
+        border-radius: 5px;
+        box-shadow: 3px 3px 3px 3px rgb(103, 89, 89);
+      "
+      alt="ss"
+    />
+  </a>
 
-
-<div class="d-flex fixed  flex-column flex-md-row justify-content-between p-3 px-md-4 mb-5 bg-white
-     border-bottom shadow-sm">
-    <a href="">
-        <img src="/src/assets/images/st.jpg" style="max-width: 70px;border-radius: 5px; box-shadow: 3px 3px 3px 3px rgb(103, 89, 89);" alt="ss">
-
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a
+      class="p-2"
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLinkActive="active"
+      [routerLink]="['/shop']"
+      >Shop</a
+    >
+    <a
+      href=""
+      class="p-2"
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLinkActive="active"
+      [routerLink]="['/']"
+      >Home</a
+    >
+  </nav>
+  <div class="d-flex align-items-center">
+    <a href="" class="cart-blank">
+      <i class="fa fa-shopping-cart fa-2x mr-5 text-dark"></i>
+      <div class="cart-no">5</div>
     </a>
-   
-     <nav class="my-2 my-md-0 mr-md-3">
-        <a href="" class="p-2 text-dark ">Features</a>
-        <a href="" class="p-2 text-dark ">Features</a>
-        <a href="" class="p-2 text-dark ">Features</a>
-        <a href="" class="p-2 text-dark ">Features</a>
-        <a href="" class="p-2 text-dark ">Featuresss</a>
-
-     </nav>
-     <div class="d-flex align-items-center ">
-        
-        <a href=""class="cart-blank " >
-            <i class="fa fa-shopping-cart fa-2x mr-5 text-dark"></i>
-            <div class="cart-no">5</div>
-        </a>
-        <a href="" class="btn btn-outline-primary mx-2">Login</a>
-        <a href="" class="btn btn-outline-primary mx-2">Sign up</a>
-       
-     </div>
-   
-
-
+    <a href="" class="btn btn-outline-primary mx-2">Login</a>
+    <a href="" class="btn btn-outline-primary mx-2">Sign up</a>
+  </div>
 </div>

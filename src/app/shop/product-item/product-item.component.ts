@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ProductModel } from 'src/app/shared/Models/ProductModel';
 
 @Component({

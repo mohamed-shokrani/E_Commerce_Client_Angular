@@ -5,4 +5,5 @@ export interface ProductModel {
   productBrandName: string;
   productTypeName: string;
   price: number;
+  productId: number;
 }

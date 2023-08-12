@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { PagingHeaderComponent } from './component/paging-header/paging-header.component';
 import { PagerComponent } from './component/pager/pager.component';
+import { NotfoundComponent } from './component/notfound/notfound.component';
 
 @NgModule({
-  declarations: [PagingHeaderComponent, PagerComponent],
+  declarations: [PagingHeaderComponent, PagerComponent, NotfoundComponent],
   imports: [CommonModule, PaginationModule.forRoot()],
   exports: [PaginationModule, PagerComponent, PagingHeaderComponent],
 })

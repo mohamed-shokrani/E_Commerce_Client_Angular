@@ -5,4 +5,5 @@ export interface IProducts {
   pictureUrl: string;
   productBrandName: string;
   productTypeName: string;
+  productId: number;
 }
