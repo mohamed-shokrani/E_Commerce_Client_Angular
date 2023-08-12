@@ -46,10 +46,13 @@
       class="form-select mb-3"
       id=""
       [(ngModel)]="selectedSortByPrice"
-      (change)="getProducts()"
+      (change)="onSortSelected()"
     >
       <!-- <option value="" selected>Alphabetical</option> -->
+      <option [value]="sortByName">Sort by Name</option>
+
       <option [value]="priceAsc">Price: Low to high</option>
+
       <option [value]="priceDsc">Price: high to Low</option>
     </select>
     {{ selectedSortByPrice }}
@@ -59,7 +62,7 @@
         <li
           class="list-group-item"
           *ngFor="let barnd of brands"
-          [class.active]="barnd.id === this.brandIdSelected"
+          [class.active]="barnd.id === this.shopParams.brandId"
           [value]="barnd.id"
           (click)="onBrandIdSelected(barnd.id)"
         >
@@ -74,7 +77,7 @@
         <li
           class="list-group-item"
           *ngFor="let type of types"
-          [class.active]="type.id === this.typeIdSelected"
+          [class.active]="type.id === this.shopParams.productTypeId"
           [value]="type.id"
           (click)="onTypeIdSelected(type.id)"
         >
@@ -85,9 +88,11 @@
   </div>
   <div class="col-8">
     <div class="d-flex justify-content-between align-items-center mt-2 mb-2">
-      <header style="margin-left: 4em" class="col-5">
-        <span>Showing <strong>10</strong> of <strong>16</strong></span>
-      </header>
+      <app-paging-header
+        [totalCount]="totalCount"
+        [pageSize]="this.shopParams.pageSize"
+      >
+      </app-paging-header>
       <div class="d-flex col-7 form-inline mt-2">
         <input
           type="text"
@@ -95,11 +100,20 @@
           style="max-width: 300px"
           placeho
           lder="Search"
+          #search
+          (keyup.enter)="onSearch()"
         />
-        <button class="btn btn-outline-primary mx-2" style="max-width: 100px">
+        <button
+          class="btn btn-outline-primary mx-2"
+          style="max-width: 100px"
+          (click)="onSearch()"
+        >
           Search
         </button>
-        <button class="btn btn-outline-success mx-2" (click)="resetProducts()">
+        <!-- <button class="btn btn-outline-success mx-2" (click)="resetProducts()">
+          Reset
+        </button> -->
+        <button class="btn btn-outline-success mx-2" (click)="onReset()">
           Reset
         </button>
       </div>
@@ -109,6 +123,18 @@
       <div class="col-md-4" *ngFor="let pro of Products">
         <app-product-item [_itemFromParent]="pro"></app-product-item>
       </div>
+    </div>
+    <h1>totalCount --> {{ totalCount }}</h1>
+    <h1>pageSize --> {{ this.shopParams.pageSize }}</h1>
+    <h1>pageNumber --> {{ this.shopParams.pageNumber }}</h1>
+
+    <div *ngIf="totalCount > 0" class="d-flex justify-content-center mt-2 mb-2">
+      <app-pager
+        [totalCount]="totalCount"
+        [pageSize]="this.shopParams.pageSize"
+        (pageChanged)="onPageChanged($event)"
+      >
+      </app-pager>
     </div>
   </div>
 </div>

@@ -6,6 +6,7 @@ import { ProductModel } from '../shared/Models/ProductModel';
 import { Observable, map } from 'rxjs';
 import { IProductBrand } from '../shared/Models/iproduct-brand';
 import { IProductTypes } from '../shared/Models/iproduct-types';
+import { shopParams } from '../shared/Models/shopParams';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +16,30 @@ export class ShopService {
   baseUrl: string = 'https://localhost:7136/api/';
 
   constructor(private http: HttpClient) {}
-  getProducts(brandId?: number, productTypeId?: number, priceSorted?: string) {
+  getProducts(shopParams?: shopParams) {
     let params = new HttpParams();
 
-    if (brandId) params = params.append('brandId', brandId.toString());
-    if (productTypeId)
-      params = params.append('productTypeId', productTypeId.toString());
+    if (shopParams?.brandId)
+      params = params.append('brandId', shopParams.brandId.toString());
+    if (shopParams?.productTypeId)
+      params = params.append(
+        'productTypeId',
+        shopParams.productTypeId.toString()
+      );
 
-    if (priceSorted) params = params.append('sort', priceSorted);
+    if (shopParams?.sort) params = params.append('sort', shopParams.sort);
+    if (shopParams?.pageSize)
+      params = params.append('pageSize', shopParams.pageSize.toString());
+
+    if (shopParams?.pageNumber)
+      params = params.append('indexPage', shopParams?.pageNumber.toString());
+
+    if (shopParams?.search) {
+      console.log('search params');
+
+      params = params.append('search', shopParams?.search.toString());
+    }
+    console.log(params);
 
     return (
       this.http
@@ -32,7 +49,12 @@ export class ShopService {
         }) // what we are doing is that we are observing the response
         // this is gonna get the http response instead of the body of the response
         // so we need to project these data into our actual response
-        .pipe(map((res) => res.body)) // manipulate the observable to get what we need the body
+        .pipe(
+          map((res) => {
+            console.log(res.body);
+            return res.body;
+          })
+        ) // manipulate the observable to get what we need the body
     );
   }
   getBrands() {
