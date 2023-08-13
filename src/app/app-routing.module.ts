@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { ShopComponent } from './shop/shop.component';
-import { NotfoundComponent } from './shared/component/notfound/notfound.component';
-import { ProductDetailsComponent } from './shop/product-details/product-details.component';
+import { TestErrorComponent } from './core/test-error/test-error.component';
+import { ServerErrorComponent } from './core/server-error/server-error.component';
+import { NotFoundErrorComponent } from './core/not-found-error/not-found-error.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'error-test', component: TestErrorComponent },
+  { path: 'server-error', component: ServerErrorComponent },
+  { path: 'not-found', component: NotFoundErrorComponent },
+
   {
     path: 'shop',
     loadChildren: () =>
