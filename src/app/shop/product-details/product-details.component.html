@@ -1,47 +1,49 @@
-<div class="row">
-  <div class="d-flex justify-content-center align-items-center">
-    <div class="col-10" style="box-shadow: 0 2px 2px 0 black">
-      <div class="container-fluid">
-        <div class="row bg-info shadow-sm" style="border-radius: 5px">
-          <div class="col-6 align-items-center">
-            <img
-              src="{{ product?.pictureUrl }}"
-              width="200rem"
-              height="100rem"
-              alt="{{ product?.productName }}"
-              class="img-fluid"
-            />
-          </div>
-          <div class="col-6">
-            <p>{{ product?.price | currency }}</p>
-            <h3>{{ product?.productName }}</h3>
-            <div class="d-flex align-items-center">
-              <i
-                class="fa fa-minus-circle text-warning"
-                style="cursor: pointer; font-size: 2rem"
-              ></i>
-              <span style="font-weight: bolder; font-size: 2rem" class="m-2"
-                >2</span
-              >
-              <i
-                class="fa fa-plus-circle text-warning"
-                style="cursor: pointer; font-size: 2rem"
-              ></i>
-              <button
-                type="button"
-                class="btn btn-outline-secondary btn-debug mx-2"
-              >
-                Add to Cart
-              </button>
+<ng-container *ngIf="product">
+  <div class="row">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="col-10" style="box-shadow: 0 2px 2px 0 black">
+        <div class="container-fluid">
+          <div class="row bg-info shadow-sm" style="border-radius: 5px">
+            <div class="col-6 align-items-center">
+              <img
+                src="{{ product?.pictureUrl }}"
+                width="200rem"
+                height="100rem"
+                alt="{{ product?.productName }}"
+                class="img-fluid"
+              />
             </div>
-          </div>
-          <div class="row mt-5">
-            <div class="col-12 ml-3">
-              <h4>{{ product?.description }}</h4>
+            <div class="col-6">
+              <p>{{ product?.price | currency }}</p>
+              <h3>{{ product?.productName }}</h3>
+              <div class="d-flex align-items-center">
+                <i
+                  class="fa fa-minus-circle text-warning"
+                  style="cursor: pointer; font-size: 2rem"
+                ></i>
+                <span style="font-weight: bolder; font-size: 2rem" class="m-2"
+                  >2</span
+                >
+                <i
+                  class="fa fa-plus-circle text-warning"
+                  style="cursor: pointer; font-size: 2rem"
+                ></i>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-debug mx-2"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-12 ml-3">
+                <h4>{{ product?.description }}</h4>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
