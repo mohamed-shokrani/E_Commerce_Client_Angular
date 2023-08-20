@@ -17,19 +17,19 @@ export class BasketService {
     return this.http.get<IBasket>(this.baseUrl + 'basket?id=' + id).subscribe({
       next: (basket) => {
         this.basketSource.next(basket);
-        // this.calculateTotals();
+        console.log(basket);
       },
     });
+  }
+  getBasketItems(id: string) {
+    return this.http.get<IBasket>(this.baseUrl + 'basket?id=' + id);
   }
   setBasket(basket: IBasket) {
     return this.http.post<IBasket>(this.baseUrl + 'basket', basket).subscribe(
       (res: Basket) => {
         this.basketSource.next(res);
-        console.log(res);
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
   getCurrentBaseketValue() {
@@ -56,10 +56,10 @@ export class BasketService {
     } else {
       items[index].quantity += quantity;
     }
-    console.log('itemToadd');
-    console.log(itemToadd.id);
-    console.log('items');
-    console.log(items);
+    // console.log('itemToadd');
+    // console.log(itemToadd.id);
+    // console.log('items');
+    // console.log(items);
 
     return items;
   }
