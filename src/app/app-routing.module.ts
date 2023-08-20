@@ -32,6 +32,14 @@ const routes: Routes = [
     // we access the shop path
   },
   {
+    path: 'basket',
+    loadChildren: () =>
+      import('./basket/basket.module').then((mod) => mod.BasketModule),
+    data: { breadcrumb: 'basket' },
+    // our shop module is only going to be activated and loaded when
+    // we access the shop path
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',

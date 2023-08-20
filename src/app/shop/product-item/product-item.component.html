@@ -1,23 +1,24 @@
 <div class="card mb-3 h-100 pb-2 box-shadow">
   <img
-    src="{{ _itemFromParent.pictureUrl }}"
+    src="{{ _itemFromParent?.pictureUrl }}"
     class="img-fluid bg-light"
     style="height: 225px; width: 100%; display: block"
-    alt="{{ _itemFromParent.productName }}"
+    alt="{{ _itemFromParent?.productName }}"
   />
   <div
     class="d-flex justifycontent-center align-items-center hover-overlay"
   ></div>
   <div class="card-body d-flex flex-column">
-    <a routerLink="/shop/{{ _itemFromParent.productId }}">
+    <a routerLink="/shop/{{ _itemFromParent?.productId }}">
       <h6 style="text-decoration: none !important" class="text-uppercase">
-        {{ _itemFromParent.productName }}
+        {{ _itemFromParent?.productName }}
       </h6>
     </a>
-    <span class="mb-2"> {{ _itemFromParent.price | currency }}</span>
+    <span class="mb-2"> {{ _itemFromParent?.price | currency }}</span>
 
     <div class="btn-group mt-auto">
       <button
+        (click)="addItemstoBasket()"
         type="button"
         class="btn btn-primary mx-1 fa fa-shopping-cart mr-2"
         style="border-radius: 50px"
@@ -26,7 +27,7 @@
         type="button"
         class="btn btn-outline-secondary"
         style="border-radius: 50px"
-        routerLink="/shop/{{ _itemFromParent.productId }}"
+        routerLink="/shop/{{ _itemFromParent?.productId }}"
       >
         View
       </button>

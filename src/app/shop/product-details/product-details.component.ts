@@ -3,6 +3,7 @@ import { IProducts } from 'src/app/shared/Models/iproducts';
 import { ShopService } from '../shop.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { BasketService } from 'src/app/basket/basket.service';
 
 @Component({
   selector: 'app-product-details',
@@ -15,7 +16,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private shopService: ShopService,
     private route: ActivatedRoute,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    private basketservice: BasketService
   ) {
     this.breadcrumbService.set('@productDetails', ' ');
     this.route.paramMap.subscribe((params) => {
