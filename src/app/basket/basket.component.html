@@ -1,111 +1,136 @@
-<section class="container mt-5">
+<section class="container mt-2">
   <div *ngIf="(baskets$ | async) === null">
     <p>There are no items in your cart</p>
   </div>
-  <div *ngIf="baskets$ | async as basket">
-    <div class="pb-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 py-5 mb-1">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="border-0 bg-light" scope="col">
-                      <div class="p-2 px-3 text-uppercase">Product</div>
-                    </th>
-                    <th class="border-0 bg-light" scope="col">
-                      <div class="py-2 text-uppercase">Price</div>
-                    </th>
-                    <th class="border-0 bg-light" scope="col">
-                      <div class="py-2 text-uppercase">Quantity</div>
-                    </th>
-                    <th class="border-0 bg-light" scope="col">
-                      <div class="py-2 text-uppercase">Total</div>
-                    </th>
-                    <th class="border-0 bg-light" scope="col">
-                      <div class="py-2 text-uppercase">Remove</div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of (baskets$ | async)?.items">
-                    <th class="row">
-                      <div class="p-2">
-                        <img
-                          style="max-height: 60px"
-                          src="{{ item.pictureUrl }}"
-                          alt="{{ item.productName }}"
-                          class="img-fluid"
-                        />
-                        <div class="ml-3 d-inline-block align-middle">
-                          <h5 class="mb-0">
-                            <a routerLink="/shop/{{ item.id }}">
-                              {{ item.productName }}</a
-                            >
-                          </h5>
-                          <span
-                            class="text-muted font-weight-normal font-italic d-block"
-                            >type: {{ item.type }}
-                          </span>
+  <div *ngIf="(baskets$ | async) !== null">
+    <div *ngIf="baskets$ | async as basket">
+      <div class="pb-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 py-5 mb-1">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="border-0 bg-light" scope="col">
+                        <div class="p-2 px-3 text-uppercase">Product</div>
+                      </th>
+                      <th class="border-0 bg-light" scope="col">
+                        <div class="py-2 text-uppercase">Price</div>
+                      </th>
+                      <th class="border-0 bg-light" scope="col">
+                        <div class="py-2 text-uppercase">Quantity</div>
+                      </th>
+                      <th class="border-0 bg-light" scope="col">
+                        <div class="py-2 text-uppercase">Total</div>
+                      </th>
+                      <th class="border-0 bg-light" scope="col">
+                        <div class="py-2 text-uppercase">Remove</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of (baskets$ | async)?.items">
+                      <th class="row">
+                        <div class="p-2">
+                          <img
+                            style="max-height: 60px"
+                            src="{{ item.pictureUrl }}"
+                            alt="{{ item.productName }}"
+                            class="img-fluid"
+                          />
+                          <div class="ml-5 d-inline-block align-middle">
+                            <h5 class="mb-0">
+                              <a routerLink="/shop/{{ item.id }}">
+                                {{ item.productName }}</a
+                              >
+                            </h5>
+                            <span
+                              class="text-muted font-weight-normal font-italic d-block"
+                              >type: {{ item.type }}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </th>
-                    <td class="align-middle">
-                      <strong>{{ item.price | currency }}</strong>
-                    </td>
-                    <td class="align-middle">
-                      <div class="d-flex align-items-center">
-                        <a href="">
+                      </th>
+                      <td class="align-middle">
+                        <strong>{{ item.price | currency }}</strong>
+                      </td>
+                      <td class="align-middle">
+                        <div class="d-flex align-items-center">
                           <i
+                            (click)="deceraseItemBasket(item)"
                             class="fa fa-minus-circle text-warning"
                             style="cursor: pointer; font-size: 2rem"
                           ></i>
-                        </a>
-                        <span
-                          style="font-weight: bolder; font-size: 2rem"
-                          class="m-2"
-                          #quantityItem
-                        >
-                          {{ item.quantity }}</span
-                        >
-                        <i
-                          class="fa fa-plus-circle text-warning"
-                          style="cursor: pointer; font-size: 2rem"
-                        ></i>
-                      </div>
-                    </td>
-                    <td class="align-middle">
-                      <strong>{{
-                        item.price * item.quantity | currency
-                      }}</strong>
-                    </td>
 
-                    <td class="align-middle">
-                      <a class="text-danger mx-3"
-                        ><i class="fa fa-trash" style="font-size: 2em"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          <span
+                            style="font-weight: bolder; font-size: 2rem"
+                            class="m-2"
+                          >
+                            {{ item.quantity }}</span
+                          >
+                          <i
+                            (click)="inceraseItemBasket(item)"
+                            class="fa fa-plus-circle text-warning"
+                            style="cursor: pointer; font-size: 2rem"
+                          ></i>
+                        </div>
+                      </td>
+                      <td class="align-middle">
+                        <strong>{{
+                          item.price * item.quantity | currency
+                        }}</strong>
+                      </td>
+
+                      <td class="align-middle">
+                        <a class="text-danger mx-3"
+                          ><i
+                            class="fa fa-trash"
+                            style="font-size: 2em"
+                            (click)="removeItemFromBasket(item)"
+                          ></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div>
+                  <a class="w-100 btn btn-outline-danger" (click)="deleteCart()"
+                    >Empty Cart</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <app-order-totals></app-order-totals>
+              <div class="">
+                <a
+                  href=""
+                  routerLink="/checkout"
+                  class="btn btn-outline-success p-1 py-2 w-100"
+                  >Check Out</a
+                >
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <ng-container *ngIf="baskets$ | async">
-      <div *ngFor="let item of (baskets$ | async)?.items">
-        <p>{{ item.productName }}</p>
-        <p>{{ item.brand }}</p>
-        <p>{{ item.quantity }}</p>
-      </div>
-    </ng-container>
+  </div>
+  <div *ngIf="emptyCart">
+    <div class="d-flex justify-content-center">
+      <img src="/assets/images/no-bg.png" alt="" />
+    </div>
+    <div class="text-center">
+      <p class="bg-light text-danger">
+        Sorry Your Cart Is empty
+        <strong class="ml-2 btn btn-outline-success" routerLink="/shop"
+          >Go Shopping ???</strong
+        >
+      </p>
+    </div>
   </div>
 </section>
-<p>
-  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt id
-  necessitatibus dolor perferendis? Maxime eius magnam cum iusto doloribus ad
-  neque. Accusantium eum sapiente dolorum perspiciatis eveniet nihil aliquid
-  facere.
-</p>

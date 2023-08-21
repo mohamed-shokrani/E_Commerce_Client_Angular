@@ -18,19 +18,26 @@
               <h3>{{ product.productName }}</h3>
               <div class="d-flex align-items-center">
                 <i
+                  [class.d-none]="quantityy < 1"
+                  (click)="decreaseItemtoBasket()"
                   class="fa fa-minus-circle text-warning"
                   style="cursor: pointer; font-size: 2rem"
                 ></i>
-                <span style="font-weight: bolder; font-size: 2rem" class="m-2"
-                  >2</span
+
+                <span
+                  style="font-weight: bolder; font-size: 2rem"
+                  class="m-2"
+                  >{{ quantityy }}</span
                 >
                 <i
+                  (click)="increaseItemtoBasket()"
                   class="fa fa-plus-circle text-warning"
                   style="cursor: pointer; font-size: 2rem"
                 ></i>
                 <button
                   type="button"
                   class="btn btn-outline-secondary btn-debug mx-2"
+                  (click)="addItemtoBasket()"
                 >
                   Add to Cart
                 </button>
@@ -47,3 +54,4 @@
     </div>
   </div>
 </ng-container>
+<input type="text" #quantity class="form-group m-5" />

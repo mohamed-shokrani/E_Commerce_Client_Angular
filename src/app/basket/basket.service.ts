@@ -4,6 +4,7 @@ import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/envioronments/environment';
 import { Basket, IBasket, IBasketItem } from '../shared/Models/ibasket';
 import { IProducts } from '../shared/Models/iproducts';
+import { IBasketTotal } from '../shared/Models/ibasket-total';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,9 @@ import { IProducts } from '../shared/Models/iproducts';
 export class BasketService {
   baseUrl = environment.apiUrl;
   private basketSource = new BehaviorSubject<IBasket | null>(null);
+  private basketTotalSource = new BehaviorSubject<IBasketTotal | null>(null);
+  totalBasket$ = this.basketTotalSource.asObservable();
+
   basket$ = this.basketSource.asObservable();
   constructor(private http: HttpClient) {}
   getBasket(id: string) {
@@ -18,6 +22,9 @@ export class BasketService {
       next: (basket) => {
         this.basketSource.next(basket);
         console.log(basket);
+
+        this.calculateTotals();
+        // console.log(basket);
       },
     });
   }
@@ -25,11 +32,80 @@ export class BasketService {
     return this.http.get<IBasket>(this.baseUrl + 'basket?id=' + id);
   }
   setBasket(basket: IBasket) {
-    return this.http.post<IBasket>(this.baseUrl + 'basket', basket).subscribe(
-      (res: Basket) => {
+    // let observer = {
+    //   next: (res: Basket) => {
+    //     this.basketSource.next(res);
+    //   },
+    // };
+    return this.http.post<IBasket>(this.baseUrl + 'basket', basket).subscribe({
+      next: (res: Basket) => {
         this.basketSource.next(res);
+        console.log('re');
+
+        console.log(res);
+
+        this.calculateTotals();
       },
-      (err) => {}
+    });
+  }
+  increaseItemQuantity(item: IBasketItem) {
+    const basket = this.getCurrentBaseketValue();
+    let findItemIndex = basket?.items.findIndex((x) => x.id === item.id);
+
+    if (typeof findItemIndex === 'number' && findItemIndex >= 0) {
+      if (basket?.items[findItemIndex].quantity) {
+        basket.items[findItemIndex].quantity++;
+        this.setBasket(basket);
+      }
+    }
+  }
+  decreaseItemQuantity(item: IBasketItem) {
+    const basket = this.getCurrentBaseketValue();
+    const findItemIndex = basket?.items.findIndex((x) => x.id === item.id);
+    if (typeof findItemIndex === 'number' && findItemIndex >= 0) {
+      if (basket?.items[findItemIndex].quantity) {
+        if (basket?.items[findItemIndex].quantity > 1) {
+          basket.items[findItemIndex].quantity--;
+          this.setBasket(basket);
+        } else {
+          this.removeItemFromBasket(item);
+        }
+      }
+    }
+  }
+  removeItemFromBasket(item: IBasketItem) {
+    const basket = this.getCurrentBaseketValue();
+    if (basket?.items.some((x) => x.id === item.id)) {
+      basket.items = basket.items.filter((x) => x.id !== item.id);
+      if (basket.items.length > 0) {
+        this.setBasket(basket);
+      } else {
+        this.deleteBasket(basket);
+      }
+    }
+  }
+  deleteBasket(basket: IBasket) {
+    this.http.delete(this.baseUrl + 'basket?id=' + basket.id).subscribe(
+      () => {
+        this.basketSource.next(null);
+        this.basketTotalSource.next(null);
+        localStorage.removeItem('basket_id');
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  deleteCart(str: string) {
+    this.http.delete(this.baseUrl + 'basket?id=' + str).subscribe(
+      () => {
+        this.basketSource.next(null);
+        this.basketTotalSource.next(null);
+        localStorage.removeItem(str);
+      },
+      (err) => {
+        console.log(err);
+      }
     );
   }
   getCurrentBaseketValue() {
@@ -78,5 +154,21 @@ export class BasketService {
     const basket = new Basket();
     localStorage.setItem('basket_id', basket.id);
     return basket;
+  }
+  private calculateTotals() {
+    let items = this.basket$.pipe(map((ele) => ele?.items));
+    let basketItem = this.getCurrentBaseketValue();
+    // let subtotal = 0;
+    const subtotal = basketItem?.items.reduce(
+      (a, b) => b.quantity * b.price + a,
+      0
+    );
+    // basketItem?.items.map((ele) => (subtotal += ele.quantity * ele.price));
+
+    const shipping = 0;
+    let total = 0;
+    if (typeof subtotal === 'number') total = subtotal + shipping;
+
+    if (subtotal) this.basketTotalSource.next({ shipping, total, subtotal });
   }
 }
